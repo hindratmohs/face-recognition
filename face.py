@@ -5,14 +5,14 @@ import numpy as np
 from PIL import Image
 import pickle
 
-
-
-Id = input("Enter Your Id: ")
+#def takeimages():
 name = input("Enter Your Name: ")
-#membuat folder baru
+Id = input("Enter Your Id: ")
+    
 
-face_cascade = cv2.CascadeClassifier(r'C:\Users\Indra\Downloads\Kp\Project\cascades\data\haarcascade_frontalface_alt2.xml')
-recognizer = cv2.face.LBPHFaceRecognizer_create()
+face_cascade = cv2.CascadeClassifier(r'C:\Users\Indra\Downloads\Kp\Project\cascades\data\haarcascade_frontalface_default.xml')
+#face_cascade = cv2.CascadeClassifier(r'C:\Users\Indra\Downloads\Kp\Project\cascades\data\haarcascade_frontalface_alt2.xml')
+#recognizer = cv2.face.LBPHFaceRecognizer_create()
 cap = cv2.VideoCapture(0) #menangkap object 
 sampleNum = 0
 
@@ -29,32 +29,32 @@ while(True):
         roi_color = frame[y:y+h, x:x+w]
         #incrementing sample number
         sampleNum = sampleNum+1
-        cv2.imwrite("images\Dataset" + os.sep +name + "."+Id + '.' + str(sampleNum) + ".jpg", roi_gray) #menyimpan Gambar
+        cv2.imwrite("images\ " + name +"."+Id + '.'+ str(sampleNum) + ".jpg", roi_gray) #menyimpan Gambar
         print("Berhasil menyimpan")
 
-        #reconigize ?
+        #rectangle
         color = (255, 0, 0) #BGR
         stroke = 2
         end_color_x = x + w
         end_color_y = y + h
-
         cv2.rectangle(frame, (x,y), (end_color_x,end_color_y), color, stroke)
-        
+            
     # Tampilkan frame yang dihasilkan 100 milisecond
     cv2.imshow('frame',frame)
     if cv2.waitKey(100) & 0xFF == ord('q'):
         break
     # break if the sample number is morethan 100
-    elif sampleNum > 25:
+    elif sampleNum > 60:
         break
 # When everything done, release the capture
 cap.release() #menutup kembali kamera
 cv2.destroyAllWindows()
-res = "Images Saved for ID : " + Id + " Name : " + name
-row = [Id, name]
-with open("Mahasiswa"+os.sep+"mahasiswa.csv", 'a+') as csvFile:
+#save csv
+row = [Id , name]
+with open('Mahasiswa\mahasiswa.csv', 'a+') as csvFile:
     writer = csv.writer(csvFile)
     writer.writerow(row)
 csvFile.close()
-
+res = "Images Saved for ID : " + str(Id) + " Name : " + name + " saved"
+print(res)
 
