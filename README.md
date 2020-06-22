@@ -6,6 +6,7 @@ Sofware yang di gunakan
 vscode
 anaconda
 
+
 Requirements
 pandas
 opencv-python
